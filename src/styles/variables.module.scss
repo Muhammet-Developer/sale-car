@@ -1,0 +1,16 @@
+@import 'mixins';
+
+$color-primar:orange;
+
+.title{
+    color: $color-primar;
+    a{
+        background-color: aqua;
+    }
+}
+
+@include sm(){
+    .title{
+        background-color: orange;
+    }
+}
