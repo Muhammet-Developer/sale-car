@@ -1,4 +1,5 @@
 
+'use client'
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import addCar from '@/app/store/addCar'

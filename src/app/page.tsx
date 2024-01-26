@@ -3,12 +3,20 @@ import home from '@/styles/home.module.scss'
 import Image from 'next/image';
 import { useState } from 'react';
 import Card from './components/Card';
+import { useSelector } from 'react-redux';
+import { addCarSelector } from './store/addCar';
 export default function Home() {
   const [filterOpen, setFilterOpen] = useState(false)
+  const { allCarData } = useSelector(addCarSelector);
+  console.log(allCarData)
+  const parseDateString = (dateString: string): Date => {
+    const [year, month, day, hour, minute] = dateString.split(/[.: ]/).map(Number);
+    return new Date(year, month - 1, day, hour, minute);
+  };
   return (
     <div className={home['container']}>
       <div className={home['center-div']}>
-        <div >
+        <div>
           <p>
             <span>
               ANA SAYFA
@@ -27,8 +35,11 @@ export default function Home() {
         </div>
         <div className={home['line']}></div>
         <br />
-        <div >
-            <Card />
+        <div className={home['card-container']} >
+          {allCarData?.map((item,key)=>(
+            <Card key={key} item={item}/>
+            )
+          )}
         </div>
       </div>
     </div>
