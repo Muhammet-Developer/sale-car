@@ -24,6 +24,7 @@ export default function RootLayout({
         </header>
         <ReduxProvider>
           {children}
+
         </ReduxProvider>
       </body>
     </html>

@@ -4,6 +4,7 @@ import addCar from '@/styles/addCar.module.scss'
 import { useAppDispatch } from '../store'
 import { ADD_CAR, SET_ALL_CAR_DATA, addCarSelector } from '../store/addCar'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 const page = () => {
   const date = () => {
     const date = new Date();
@@ -23,6 +24,7 @@ const page = () => {
     image: '',
     urgent: false,
     date: '',
+    count:0
   })
   const inputFile = useRef<HTMLInputElement>(null);
 
@@ -34,7 +36,9 @@ const page = () => {
       image: formData.image,
       urgent: formData.urgent,
       date: date(),
+      count:0
     }]))
+    toast.success('İlan Başarıyla Kaydedilmiştir')
 
     if (inputFile.current) {
       inputFile.current.value = '';
@@ -45,6 +49,7 @@ const page = () => {
       image: '',
       urgent: false,
       date: date(),
+      count:0
     });
   }
 

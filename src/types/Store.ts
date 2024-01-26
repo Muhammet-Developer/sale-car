@@ -8,5 +8,5 @@ interface addCarDataType{
     image:any;
     urgent:boolean;
     date:string;
-    count?:0
+    count:0
 }

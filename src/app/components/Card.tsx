@@ -6,6 +6,7 @@ import { useWindowSize } from 'usehooks-ts';
 import { useSelector } from 'react-redux';
 import { SET_ALL_CAR_DATA, addCarSelector } from '../store/addCar';
 import { useAppDispatch } from '../store';
+import { toast } from 'react-toastify';
 const Card = ({ item }: { item: addCarDataType }) => {
   const { id, name, date, image, urgent, count } = item;
   const { width } = useWindowSize();
@@ -17,8 +18,10 @@ const Card = ({ item }: { item: addCarDataType }) => {
     if (item) {
       const updatedArray = allCarData?.filter((elem) => elem.id !== id);
       dispatch(SET_ALL_CAR_DATA(updatedArray))
+      toast.success('İlan Başarıyla Silinmiştir')
     }
   }
+ 
   return (
     <div className={card['card-container']} onMouseOver={() => { width > 1024 && setShowButton(true); }} onMouseLeave={() => { width > 1024 && setShowButton(false); }}>
       <img src={!image ? image : '/noImage.png'} width={350} height={250} alt={name} />
@@ -42,7 +45,7 @@ const Card = ({ item }: { item: addCarDataType }) => {
         <p>{name}</p>
         <div>
           <Image src='favorite.svg' width={15} height={15} alt='favorite' />
-          Toplam Favori Sayısı:<span> 6</span>
+          Toplam Favori Sayısı:<span> {count}</span>
         </div>
         <div>
           <Image src='calendar.svg' width={15} height={15} alt='favorite' />
