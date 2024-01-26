@@ -1,6 +1,11 @@
+'use client'
 import React from 'react'
 import addCar from '@/styles/addCar.module.scss'
 const page = () => {
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+   
+  }
   return (
     <div className={addCar['container']}>
       <div className={addCar['center-div']}>
@@ -12,15 +17,15 @@ const page = () => {
           </p>
         </div>
         <div className={addCar['line']}></div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={addCar['form-container']}>
             <div>
               <label htmlFor="name">İlan Başlığı</label>
-              <input type="text" />
+              <input type="text" id='name'/>
             </div>
             <div>
-              <label htmlFor="name">İlan Kapak Görseli</label>
-              <input type="text" />
+              <label htmlFor="image">İlan Kapak Görseli</label>
+              <input type="file" id='image' onChange={(e)=> console.log(e)}/>
             </div>
             <div>
               <label htmlFor="name">Acil mi?</label>
