@@ -1,0 +1,61 @@
+.card-container {
+    position: relative;
+    img{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    >div:nth-child(5) {
+        font-size: small;
+        padding: 10px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      
+        >div{
+            margin-bottom: 5px;
+            img{
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.favorite-heart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px !important;
+    background-color: #faf6f7;
+    position: absolute;
+    top: 10px;
+    left: 300px;
+    cursor: pointer;
+}
+.delete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px !important;
+    background-color: #faf6f7;
+    position: absolute;
+    top: 60px;
+    left: 300px;
+    cursor: pointer;
+}
+.urgent{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 10px;
+    background-color: #fb5250;
+    width: 50px;
+    padding: 5px;
+    color: white;
+  >span{
+    margin-left: 2px;
+  }
+}

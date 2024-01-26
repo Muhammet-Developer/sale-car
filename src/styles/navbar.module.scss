@@ -1,0 +1,24 @@
+
+
+.navbar-container{
+    height: 80px;
+    background-color: #eaeaea;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        nav{
+        height: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .navigation-button{
+            border: 1px solid gray;
+            padding: 15px 25px ;
+            border-radius: 5px;
+            background-color: rgb(108, 128, 128);
+            text-decoration: none;
+            color: white;
+        }
+    }
+}
