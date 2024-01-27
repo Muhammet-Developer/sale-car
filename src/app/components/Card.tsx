@@ -9,7 +9,6 @@ import { useAppDispatch } from '../store';
 import { toast } from 'react-toastify';
 const Card = ({ item }: { item: addCarDataType }) => {
   const { id, name, date, image, urgent, count } = item;
-  
   const { width } = useWindowSize();
   const [showButton, setShowButton] = useState(false);
   const { allCarData } = useSelector(addCarSelector);
@@ -44,7 +43,7 @@ const Card = ({ item }: { item: addCarDataType }) => {
 
 
   return (
-    <div className={card['card-container']} onMouseOver={() => { width > 1024 && setShowButton(true); }} onMouseLeave={() => { width > 1024 && setShowButton(false); }}>
+    <div key={id} className={card['card-container']} onMouseOver={() => { width > 1024 && setShowButton(true); }} onMouseLeave={() => { width > 1024 && setShowButton(false); }}>
       <img src={image ? image : '/noImage.png'}  alt={name} />
       <div className={card['favorite-heart']}>
         <Image src='/favorite-heart.svg' width={20} height={25} alt='defaultCar' onClick={() => countPlus(id)} />

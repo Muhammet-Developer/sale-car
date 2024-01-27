@@ -29,7 +29,7 @@ const page = () => {
       name: formData.name,
       image: formData.image,
       urgent: formData.urgent,
-      date: new Date(),
+      date: new Date().toISOString(),
       count: 0
     }].reverse()))
     toast.success('İlan Başarıyla Kaydedilmiştir. Ana Sayfaya Yönlendiriliyorsunuz');

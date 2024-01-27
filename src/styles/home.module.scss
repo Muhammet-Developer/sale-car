@@ -40,11 +40,13 @@
     right: 0px;
     background-color: #e2e0e2;
     border-radius: 10px;
-
     >div:first-child {
         padding: 15px;
         border-bottom: 1px solid gray;
         cursor: pointer;
+    }:hover{
+        background-color: #6C8080;
+        color: white;
     }
 
     >div:nth-child(2) {
@@ -54,9 +56,6 @@
 }
 
 .card-container {
-    // display: grid;
-    // grid-gap: 2rem;
-    // grid-template-columns: repeat(3, 350px);
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -64,7 +63,6 @@
 
 @include xl() {
     .card-container {
-        // justify-content: center;
         justify-content: space-around;
         margin-left: 10px;
         margin-right: 10px;

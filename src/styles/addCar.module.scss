@@ -1,5 +1,6 @@
-.container{
+@import 'mixins';
 
+.container{
     p{
         font-size: x-large;
         margin-bottom: 10px;
@@ -49,27 +50,37 @@
     div:nth-child(2){
         display: flex;
         flex-direction: column;
-        width: 90px;
-        height: 60px;
-        background: url('https://cdn1.iconfinder.com/data/icons/Aire%20PNGs/512/Folders/Upload%20Folder.png');
-      background-size: 90px 60px;
-        overflow: hidden;
         label{
             margin-top: 15px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
-        input{
-            font-size: 14px;
-            border-radius: 6px;
-            line-height: 1.5;
-            padding: 5px 10px;
-            transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
-            border: 2px solid #dee1e2;
-            color: rgb(14, 14, 16);
-            background: #dee1e2;
-            display: block;
-            height: 36px;
-        }
+        input[type="file"] {
+            cursor: pointer !Important;
+            font: 300 14px sans-serif;
+            color:#9e9e9e;
+            background-color: #dee1e2;
+          }
+          input[type="file"]::-webkit-file-upload-button
+          {
+            font: 300 14px  sans-serif;
+            background: #009688;
+            border: 0;
+            padding: 12px 25px;
+            cursor: pointer;
+            color: #fff;
+            text-transform: uppercase;
+          }
+           
+          input[type="file"]::-ms-browse {
+            font: 300 14px 'Roboto', sans-serif;
+            background: #009688;
+            border: 0;
+            padding: 12px 25px;
+            cursor: pointer;
+            color: #fff;
+            text-transform: uppercase;
+          }
+          
     }
     
     div:nth-child(3){
@@ -103,5 +114,10 @@
             }
         
         }
+    }
+}
+@include md() {
+    .form-container{
+        width:90%;
     }
 }

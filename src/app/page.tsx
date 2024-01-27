@@ -1,7 +1,7 @@
 'use client'
 import home from '@/styles/home.module.scss'
 import Image from 'next/image';
-import {  useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from './components/Card';
 import { useSelector } from 'react-redux';
 import { SET_ALL_CAR_DATA, addCarSelector } from './store/addCar';
@@ -13,22 +13,53 @@ export default function Home() {
   const { allCarData } = useSelector(addCarSelector);
   const dispatch = useAppDispatch()
 
-  const filtered = (count?: boolean) => {
+  const fetchCarData = async () => {
+    try {
+      setIsLoading(true);
+      const data = await allCarData;
+      dispatch(SET_ALL_CAR_DATA(data));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCarData();
+  }, []);
+
+  const filtered = async (count?: boolean) => {
     if (count) {
-      const countUpdateData = [...allCarData].sort((a, b) => {
-        if (b.count === a.count) {
-          return new Date(b.date).valueOf() - new Date(a.date).valueOf();
-        }
-        return b.count - a.count
-      });
-      dispatch(SET_ALL_CAR_DATA(countUpdateData))
-      setFilterOpen(false)
+      try {
+        setIsLoading(true);
+        const countUpdateData = [...allCarData].sort((a, b) => {
+          if (b.count === a.count) {
+            return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+          }
+          return b.count - a.count
+        });
+        dispatch(SET_ALL_CAR_DATA(countUpdateData))
+        setFilterOpen(false)
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
-      const lastUpdateData = [...allCarData].sort((a, b) => {
-        return new Date(b.date).valueOf() - new Date(a.date).valueOf();
-      })
-      dispatch(SET_ALL_CAR_DATA(lastUpdateData))
-      setFilterOpen(false)
+      try {
+        setIsLoading(true);
+        const lastUpdateData = [...allCarData].sort((a, b) => {
+          return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+        })
+        dispatch(SET_ALL_CAR_DATA(lastUpdateData))
+        setFilterOpen(false)
+
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   }
 
@@ -53,13 +84,15 @@ export default function Home() {
         </div>
         <div className={home['line']}></div>
         <br />
-       
-        <div className={home['card-container']} >
-          {allCarData.length ? allCarData?.map((item, key) => (
-            isLoading ?  <CardSkeleton/> :
-            <Card key={key} item={item} />
-          )
-          ):<p>İlan Bulunamadı.</p>}
+
+        <div className={home['card-container']}>
+          {allCarData.length ? (
+            allCarData.map((item) => (
+              isLoading ? <CardSkeleton /> : <Card item={item} />
+            ))
+          ) : (
+            <p>İlan Bulunamadı.</p>
+          )}
         </div>
       </div>
     </div>
