@@ -37,10 +37,12 @@ const page = () => {
         date: new Date().toISOString(),
         count: 0
       }].reverse()))
-      toast.success('İlan Başarıyla Kaydedilmiştir. Ana Sayfaya Yönlendiriliyorsunuz');
+      toast.success('İlan Başarıyla Kaydedilmiştir. Ana Sayfaya Yönlendiriliyorsunuz',{
+        autoClose:2000
+      });
       setTimeout(() => {
         push('/');
-      }, 5000);
+      }, 2000);
       // Form input file reset
       if (inputFile.current) {
         inputFile.current.value = '';
