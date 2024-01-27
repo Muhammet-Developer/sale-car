@@ -13,38 +13,45 @@ const Card = ({ item }: { item: addCarDataType }) => {
   const [showButton, setShowButton] = useState(false);
   const { allCarData } = useSelector(addCarSelector);
   const dispatch = useAppDispatch();
+
+
+  // I send the Date() parameter directly in the vehicle addition section. Here, I adapt the incoming date data according to the format I want to show.
+  const originalDate = new Date(date);
+  const formattedDate = originalDate.getFullYear() + '.' +
+    ('0' + (originalDate.getMonth() + 1)).slice(-2) + '.' +
+    ('0' + originalDate.getDate()).slice(-2) + ' ' +
+    ('0' + originalDate.getHours()).slice(-2) + ':' +
+    ('0' + originalDate.getMinutes()).slice(-2);
+
+  // Remove function
   const handleDelete = (id: number) => {
+    // If item exists, filter and delete allCarData data and send the last value SET_ALL_CAR_DATA
     if (item) {
-      const updatedArray = allCarData?.filter((elem) => elem.id !== id);
-      dispatch(SET_ALL_CAR_DATA(updatedArray))
+      const deleteUpdateData = allCarData?.filter((elem) => elem.id !== id);
+      dispatch(SET_ALL_CAR_DATA(deleteUpdateData))
       toast.success('İlan Başarıyla Silinmiştir')
     }
   }
+
+  // function to increase the number of favourites of the respective vehicle
   const countPlus = (id: number) => {
     const updatedData = allCarData?.map((item) =>
       item.id === id ? { ...item, count: item.count + 1 } : item
     );
     dispatch(SET_ALL_CAR_DATA(updatedData));
   }
-  useEffect(() => {
-   if(width < 1024){
-    setShowButton(true)
-   }
-  }, [width])
-  
 
-  const originalDate = new Date(date);
-  const formattedDate =
-    originalDate.getFullYear() + '.' +
-    ('0' + (originalDate.getMonth() + 1)).slice(-2) + '.' +
-    ('0' + originalDate.getDate()).slice(-2) + ' ' +
-    ('0' + originalDate.getHours()).slice(-2) + ':' +
-    ('0' + originalDate.getMinutes()).slice(-2);
+  // continuously show the delete icon after 1024 is smaller than the screen
+  useEffect(() => {
+    if (width < 1024) {
+      setShowButton(true)
+    }
+  }, [width])
 
 
   return (
     <div key={id} className={card['card-container']} onMouseOver={() => { width > 1024 && setShowButton(true); }} onMouseLeave={() => { width > 1024 && setShowButton(false); }}>
-      <img src={image ? image : '/noImage.png'}  alt={name} />
+      <img src={image ? image : '/noImage.png'} alt={name} />
       <div className={card['favorite-heart']}>
         <Image src='/favorite-heart.svg' width={20} height={25} alt='defaultCar' onClick={() => countPlus(id)} />
       </div>
@@ -69,7 +76,7 @@ const Card = ({ item }: { item: addCarDataType }) => {
         </div>
         <div>
           <Image src='calendar.svg' width={15} height={15} alt='favorite' />
-          Son Güncellenme: <span>{formattedDate}</span>
+          Son Güncellenme: <span> {formattedDate}</span>
         </div>
       </div>
     </div>

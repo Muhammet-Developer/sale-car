@@ -60,6 +60,14 @@
     flex-wrap: wrap;
     gap: 1rem;
 }
+.no-found{
+    margin-left: auto;
+    margin-right: auto;
+    div{
+        text-align: center;
+      @include button
+    }
+}
 
 @include xl() {
     .card-container {

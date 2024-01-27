@@ -12,6 +12,7 @@ const page = () => {
   const dispatch = useAppDispatch();
   const { allCarData } = useSelector(addCarSelector);
   const { push } = useRouter();
+
   const [formData, setFormData] = useState<addCarDataType>({
     id: 0,
     name: '',
@@ -22,47 +23,60 @@ const page = () => {
   })
   const inputFile = useRef<HTMLInputElement>(null);
 
+  // The function to which the data is sent
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(SET_ALL_CAR_DATA([...allCarData, {
-      id: allCarData.length + 1,
-      name: formData.name,
-      image: formData.image,
-      urgent: formData.urgent,
-      date: new Date().toISOString(),
-      count: 0
-    }].reverse()))
-    toast.success('İlan Başarıyla Kaydedilmiştir. Ana Sayfaya Yönlendiriliyorsunuz');
-    setTimeout(() => {
-      push('/');
-    }, 5000);
-
-    if (inputFile.current) {
-      inputFile.current.value = '';
+    // The information received from the user waiting for the formData data in SET_ALL_CAR_DATA is sent to SET_ALL_CAR_DATA. When sending, the last data sent is set to be displayed first.
+    try {
+      dispatch(SET_ALL_CAR_DATA([...allCarData, {
+        id: allCarData.length + 1,
+        name: formData.name,
+        image: formData.image,
+        urgent: formData.urgent,
+        // convert date value to string
+        date: new Date().toISOString(),
+        count: 0
+      }].reverse()))
+      toast.success('İlan Başarıyla Kaydedilmiştir. Ana Sayfaya Yönlendiriliyorsunuz');
+      setTimeout(() => {
+        push('/');
+      }, 5000);
+      // Form input file reset
+      if (inputFile.current) {
+        inputFile.current.value = '';
+      }
+      // Form reset
+      setFormData({
+        id: allCarData.length + 2,
+        name: '',
+        image: '',
+        urgent: false,
+        date: '',
+        count: 0
+      });
+    } catch (error) {
+      toast.error('Bir Şeyler Ters Gitti')
     }
-    setFormData({
-      id: allCarData.length + 2,
-      name: '',
-      image: '',
-      urgent: false,
-      date: '',
-      count: 0
-    });
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Contains the image that the user selects from the computer
     const file = e.target.files?.[0];
-
+    // if the file exists 
     if (file) {
+      // is used to read data from a file.
       const reader = new FileReader();
 
+      // Runs when the FileReader object completes the operation. I assign the result value to the image part inside the FormData
       reader.onloadend = () => {
         setFormData({ ...formData, image: reader.result })
       };
 
+      // The readAsDataURL method reads the file by converting it to a Base64 data URL. This allows us to use the image within the <img> tag later.
       reader.readAsDataURL(file);
     }
   };
+
   return (
     <div className={addCar['container']}>
       <div className={addCar['center-div']}>
