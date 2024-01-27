@@ -1,14 +1,21 @@
+@import 'mixins';
 .card-container {
     position: relative;
     margin-bottom: 15px;
-    img{
+    >img{
+        width: 300px;
+        height: 250px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
+        @include xs() {
+            width: 100%;
+        }
     }
 }
 .car-information{
     font-size: small;
     padding: 10px;
+    // width: 350px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -30,7 +37,10 @@
     background-color: #faf6f7;
     position: absolute;
     top: 10px;
-    left: 300px;
+    left: 250px;
+    @include xs() {
+        left: 85%;
+    }
     cursor: pointer;
 }
 .delete{
@@ -43,7 +53,10 @@
     background-color: #faf6f7;
     position: absolute;
     top: 60px;
-    left: 300px;
+    left: 250px;
+    @include xs() {
+        left: 85%;
+    }
     cursor: pointer;
 }
 .urgent{

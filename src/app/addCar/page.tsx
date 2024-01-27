@@ -2,46 +2,51 @@
 import React, { useRef, useState } from 'react'
 import addCar from '@/styles/addCar.module.scss'
 import { useAppDispatch } from '../store'
-import {  SET_ALL_CAR_DATA, addCarSelector } from '../store/addCar'
+import { SET_ALL_CAR_DATA, addCarSelector } from '../store/addCar'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { useRouter, } from 'next/navigation';
+
 const page = () => {
- 
+
   const dispatch = useAppDispatch();
   const { allCarData } = useSelector(addCarSelector);
-  console.log(allCarData.length)
+  const { push } = useRouter();
   const [formData, setFormData] = useState<addCarDataType>({
-    id:  0,
+    id: 0,
     name: '',
     image: '',
     urgent: false,
     date: '',
-    count:0
+    count: 0
   })
   const inputFile = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     dispatch(SET_ALL_CAR_DATA([...allCarData, {
-      id:allCarData.length + 1,
+      id: allCarData.length + 1,
       name: formData.name,
       image: formData.image,
       urgent: formData.urgent,
       date: new Date(),
-      count:0
-    }]))
-    toast.success('İlan Başarıyla Kaydedilmiştir')
+      count: 0
+    }].reverse()))
+    toast.success('İlan Başarıyla Kaydedilmiştir. Ana Sayfaya Yönlendiriliyorsunuz');
+    setTimeout(() => {
+      push('/');
+    }, 5000);
 
     if (inputFile.current) {
       inputFile.current.value = '';
     }
     setFormData({
-      id:  allCarData.length + 2,
+      id: allCarData.length + 2,
       name: '',
       image: '',
       urgent: false,
       date: '',
-      count:0
+      count: 0
     });
   }
 
@@ -52,13 +57,12 @@ const page = () => {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        setFormData({ ...formData, image:reader.result })
+        setFormData({ ...formData, image: reader.result })
       };
 
       reader.readAsDataURL(file);
     }
   };
-  console.log(formData)
   return (
     <div className={addCar['container']}>
       <div className={addCar['center-div']}>

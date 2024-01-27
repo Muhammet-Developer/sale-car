@@ -1,10 +1,10 @@
+// @mixin xs{
+//     @media (max-width:325px){
+//        @content;
+//     }
+// }
 @mixin xs{
-    @media (max-width:325px){
-       @content;
-    }
-}
-@mixin ssm{
-    @media (max-width:500px){
+    @media (max-width:350px){
        @content;
     }
 }

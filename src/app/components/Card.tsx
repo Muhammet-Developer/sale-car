@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import card from '@/styles/card.module.scss'
 import { useWindowSize } from 'usehooks-ts';
 import { useSelector } from 'react-redux';
@@ -27,6 +27,12 @@ const Card = ({ item }: { item: addCarDataType }) => {
     );
     dispatch(SET_ALL_CAR_DATA(updatedData));
   }
+  useEffect(() => {
+   if(width < 1024){
+    setShowButton(true)
+   }
+  }, [width])
+  
 
   const originalDate = new Date(date);
   const formattedDate =
@@ -39,7 +45,7 @@ const Card = ({ item }: { item: addCarDataType }) => {
 
   return (
     <div className={card['card-container']} onMouseOver={() => { width > 1024 && setShowButton(true); }} onMouseLeave={() => { width > 1024 && setShowButton(false); }}>
-      <img src={image ? image : '/noImage.png'} width={350} height={250} alt={name} />
+      <img src={image ? image : '/noImage.png'}  alt={name} />
       <div className={card['favorite-heart']}>
         <Image src='/favorite-heart.svg' width={20} height={25} alt='defaultCar' onClick={() => countPlus(id)} />
       </div>
