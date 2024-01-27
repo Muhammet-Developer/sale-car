@@ -7,10 +7,12 @@ import { useSelector } from 'react-redux';
 import { SET_ALL_CAR_DATA, addCarSelector } from './store/addCar';
 import { useAppDispatch } from './store';
 import CardSkeleton from './components/CardSkeleton';
+import { useRouter } from 'next/navigation';
 export default function Home() {
   const [filterOpen, setFilterOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const { allCarData } = useSelector(addCarSelector);
+  const { push } = useRouter();
   const dispatch = useAppDispatch()
 
   // The part where all vehicles are fetched
@@ -83,6 +85,7 @@ export default function Home() {
               ANA SAYFA
             </span>  VİTRİNİ
           </p>
+          {allCarData.length ? 
           <div className={home.setting}>
             <Image onClick={() => { setFilterOpen(!filterOpen) }} src='setting.svg' style={{ cursor: 'pointer' }} width={30} height={30} alt='setting-saleCar' />
             {filterOpen ?
@@ -92,6 +95,7 @@ export default function Home() {
               </div>
               : ''}
           </div>
+            :''}
         </div>
         <div className={home['line']}></div>
         <br />
@@ -106,7 +110,7 @@ export default function Home() {
             <div className={home['no-found']}>
               <p>İlan Bulunamadı.</p>
               <div>
-                <button>İlan ekle</button>
+                <button onClick={()=>push('/addCar')}>İlan ekle</button>
               </div>
             </div>
           )}
