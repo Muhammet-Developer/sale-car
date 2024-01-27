@@ -98,7 +98,7 @@ export default function Home() {
 
         <div className={home['card-container']}>
           {/* The section with all the tools and the data printed on the screen.  */}
-          {!allCarData.length ? (
+          {allCarData.length ? (
             allCarData.map((item) => (
               isLoading ? <CardSkeleton /> : <Card item={item} />
             ))
