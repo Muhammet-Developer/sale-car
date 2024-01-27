@@ -2,19 +2,11 @@
 import React, { useRef, useState } from 'react'
 import addCar from '@/styles/addCar.module.scss'
 import { useAppDispatch } from '../store'
-import { ADD_CAR, SET_ALL_CAR_DATA, addCarSelector } from '../store/addCar'
+import {  SET_ALL_CAR_DATA, addCarSelector } from '../store/addCar'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 const page = () => {
-  const date = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDay();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    return `${year}.${month}.${day} ${hour}:${minute}`
-  }
+ 
   const dispatch = useAppDispatch();
   const { allCarData } = useSelector(addCarSelector);
   console.log(allCarData.length)
@@ -35,7 +27,7 @@ const page = () => {
       name: formData.name,
       image: formData.image,
       urgent: formData.urgent,
-      date: date(),
+      date: new Date(),
       count:0
     }]))
     toast.success('İlan Başarıyla Kaydedilmiştir')
@@ -48,17 +40,25 @@ const page = () => {
       name: '',
       image: '',
       urgent: false,
-      date: date(),
+      date: '',
       count:0
     });
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (e.target.files && file) {
-      setFormData({ ...formData, image: URL.createObjectURL(e.target.files[0]) })
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setFormData({ ...formData, image:reader.result })
+      };
+
+      reader.readAsDataURL(file);
     }
   };
+  console.log(formData)
   return (
     <div className={addCar['container']}>
       <div className={addCar['center-div']}>

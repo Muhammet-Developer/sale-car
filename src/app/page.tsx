@@ -4,15 +4,32 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Card from './components/Card';
 import { useSelector } from 'react-redux';
-import { addCarSelector } from './store/addCar';
+import { SET_ALL_CAR_DATA, addCarSelector } from './store/addCar';
+import { useAppDispatch } from './store';
 export default function Home() {
   const [filterOpen, setFilterOpen] = useState(false)
   const { allCarData } = useSelector(addCarSelector);
-  console.log(allCarData)
-  const parseDateString = (dateString: string): Date => {
-    const [year, month, day, hour, minute] = dateString.split(/[.: ]/).map(Number);
-    return new Date(year, month - 1, day, hour, minute);
-  };
+  const dispatch = useAppDispatch()
+
+  const filtered = (count?: boolean) => {
+    if (count) {
+      const countUpdateData = [...allCarData].sort((a, b) => {
+        if (b.count === a.count) {
+          return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+        }
+        return b.count - a.count
+      });
+      dispatch(SET_ALL_CAR_DATA(countUpdateData))
+      setFilterOpen(false)
+    } else {
+      const lastUpdateData = [...allCarData].sort((a, b) => {
+        return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+      })
+      dispatch(SET_ALL_CAR_DATA(lastUpdateData))
+      setFilterOpen(false)
+    }
+  }
+
   return (
     <div className={home['container']}>
       <div className={home['center-div']}>
@@ -26,9 +43,8 @@ export default function Home() {
             <Image onClick={() => { setFilterOpen(!filterOpen) }} src='setting.svg' style={{ cursor: 'pointer' }} width={30} height={30} alt='setting-saleCar' />
             {filterOpen ?
               <div className={home.filter}>
-                {/* bir filtere tıklandığında  filterOpen kapat*/}
-                <div>Sırala(Son Eklenen)</div>
-                <div>Sırala(Favori Sayısı)</div>
+                <div onClick={() => filtered()}>Sırala(Son Eklenen)</div>
+                <div onClick={() => filtered(true)}>Sırala(Favori Sayısı)</div>
               </div>
               : ''}
           </div>
@@ -36,9 +52,9 @@ export default function Home() {
         <div className={home['line']}></div>
         <br />
         <div className={home['card-container']} >
-          {allCarData?.map((item,key)=>(
-            <Card key={key} item={item}/>
-            )
+          {allCarData?.map((item, key) => (
+            <Card key={key} item={item} />
+          )
           )}
         </div>
       </div>

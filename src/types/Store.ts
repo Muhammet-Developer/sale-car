@@ -7,6 +7,6 @@ interface addCarDataType{
     name:string;
     image:any;
     urgent:boolean;
-    date:string;
-    count:0
+    date:any;
+    count:number
 }

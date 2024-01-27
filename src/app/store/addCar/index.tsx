@@ -11,15 +11,11 @@ export const AddCarSlice = createSlice({
     initialState,
     reducers: {
         SET_ALL_CAR_DATA: (state, action: PayloadAction<addCarDataType[]>) => {
-            state.allCarData = action.payload.reverse();
+            state.allCarData = action.payload
         },
-        ADD_CAR:(state,action: PayloadAction<addCarDataType>)=>{
-            // state.allCarData = [...state.allCarData,action.payload];
-            state.allCarData.push(action.payload);
-        }
     }
 })
 
-export const { SET_ALL_CAR_DATA, ADD_CAR } = AddCarSlice.actions;
+export const { SET_ALL_CAR_DATA } = AddCarSlice.actions;
 export const addCarSelector = (state: IModule) => state.addCar
 export default AddCarSlice.reducer;

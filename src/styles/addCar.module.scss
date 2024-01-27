@@ -49,6 +49,11 @@
     div:nth-child(2){
         display: flex;
         flex-direction: column;
+        width: 90px;
+        height: 60px;
+        background: url('https://cdn1.iconfinder.com/data/icons/Aire%20PNGs/512/Folders/Upload%20Folder.png');
+      background-size: 90px 60px;
+        overflow: hidden;
         label{
             margin-top: 15px;
             margin-bottom: 5px;
@@ -66,6 +71,7 @@
             height: 36px;
         }
     }
+    
     div:nth-child(3){
         margin-top: 15px;
         margin-bottom: 15px;
